@@ -2,7 +2,7 @@
 
 namespace Cadence.Interfaces.Machine;
 
-public interface ISlotMachineCadenceService : IMachineService
+public interface ISlotMachineCadenceService
 {
     public RoundsCadences HandleCadences();
 }

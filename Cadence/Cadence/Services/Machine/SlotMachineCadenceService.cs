@@ -41,18 +41,6 @@ public class SlotMachineCadenceService(SlotMachineCadence slotMachineCadence) : 
             GetCadences(columnToStartAnticipate, columnToStopAnticipate);
     }
 
-    private int GetColumnToStopAnticipate(int[] columnsWithSpecialSymbol)
-    {
-        int columnToStopAnticipate = 999;
-
-        int positionToGetMaxAnticipate = slotMachineCadence.Config.MaxToAnticipate - 1;
-        
-        if (positionToGetMaxAnticipate >= 0 && columnsWithSpecialSymbol.Length >= slotMachineCadence.Config.MaxToAnticipate)
-            columnToStopAnticipate = columnsWithSpecialSymbol[positionToGetMaxAnticipate] + 1;
-        
-        return columnToStopAnticipate;
-    }
-
     private int GetColumnToStartAnticipate(int[] columnsWithSpecialSymbol)
     {
         int columnToStartAnticipate = -1;
@@ -65,11 +53,23 @@ public class SlotMachineCadenceService(SlotMachineCadence slotMachineCadence) : 
         return columnToStartAnticipate;
     }
 
-    private float[] GetCadences(int columnToStartAnticipate = -1, int columnToStopAnticipate = 999)
+    private int GetColumnToStopAnticipate(int[] columnsWithSpecialSymbol)
+    {
+        int columnToStopAnticipate = 999;
+
+        int positionToGetMaxAnticipate = slotMachineCadence.Config.MaxToAnticipate - 1;
+        
+        if (positionToGetMaxAnticipate >= 0 && columnsWithSpecialSymbol.Length >= slotMachineCadence.Config.MaxToAnticipate)
+            columnToStopAnticipate = columnsWithSpecialSymbol[positionToGetMaxAnticipate] + 1;
+        
+        return columnToStopAnticipate;
+    }
+    
+    private float[] GetCadences(int columnToStartAnticipate = 999, int columnToStopAnticipate = -1)
     {
         float[] cadences = new float[slotMachineCadence.Config.ColumnSize];
         
-        cadences[0] = slotMachineCadence.Config.DefaultCadence;
+        cadences[0] = 0;
 
         for (int i = 1; i < slotMachineCadence.Config.ColumnSize; i++)
         {

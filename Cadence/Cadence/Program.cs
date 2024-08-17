@@ -15,7 +15,6 @@ AnticipatorConfig anticipatorConfig = new AnticipatorConfig
     DefaultCadence = 0.25f
 };
 
-
 SpecialSymbol roundOne = new SpecialSymbol(new List<SlotCoordinate>
 {
     new SlotCoordinate { Column = 0, Row = 2 },
@@ -40,7 +39,7 @@ RoundsSymbols gameRounds = new RoundsSymbols(roundOne, roundTwo,roundThree);
 SlotMachineCadence machineCadence = new SlotMachineCadence(anticipatorConfig);
 machineCadence.AddRounds(gameRounds);
 
-ISlotMachineCadenceService machineService = (ISlotMachineCadenceService) MachineFactory.GetMachineService(machineCadence);
+ISlotMachineCadenceService machineService = MachineFactory.GetMachineService(machineCadence);
 
 RoundsCadences cadences = machineService.HandleCadences();
 machineCadence.CleanRounds();

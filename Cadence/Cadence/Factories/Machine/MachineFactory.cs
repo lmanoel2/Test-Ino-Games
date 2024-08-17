@@ -6,7 +6,7 @@ namespace Cadence.Factories.Machine;
 
 public static class MachineFactory
 {
-    public static IMachineService GetMachineService(MachineBase machineBase)
+    public static ISlotMachineCadenceService GetMachineService(MachineBase machineBase)
     {
         return machineBase.MachineType switch
         {
