@@ -37,9 +37,6 @@ public class SlotMachineCadence(AnticipatorConfig config) : MachineBase, ISlotMa
 
     private float[] PopulateCandence(SymbolBase symbol)
     {
-        int columnToStartAnticipate = -1;
-        int columnToStopAnticipate = 999;
-        
         int[] columnsWithSpecialSymbol = symbol.SlotCoordinates
             .Select(sc => sc.Column)
             .OrderBy(c => c)
@@ -50,24 +47,39 @@ public class SlotMachineCadence(AnticipatorConfig config) : MachineBase, ISlotMa
             columnsWithSpecialSymbol.Length < Config.MinToAnticipate)
             return GetCadences();
 
-        int positionToGetMinAnticipate = Config.MinToAnticipate - 1;
+        int columnToStartAnticipate = GetColumnToStartAnticipate(columnsWithSpecialSymbol);
+        int columnToStopAnticipate = GetColumnToStopAnticipate(columnsWithSpecialSymbol);
+
+        return columnToStartAnticipate > Config.ColumnSize ? 
+            GetCadences() : 
+            GetCadences(columnToStartAnticipate, columnToStopAnticipate);
+    }
+
+    private int GetColumnToStopAnticipate(int[] columnsWithSpecialSymbol)
+    {
+        int columnToStopAnticipate = 999;
+
         int positionToGetMaxAnticipate = Config.MaxToAnticipate - 1;
+        
+        if (positionToGetMaxAnticipate >= 0 && columnsWithSpecialSymbol.Length >= Config.MaxToAnticipate)
+            columnToStopAnticipate = columnsWithSpecialSymbol[positionToGetMaxAnticipate] + 1;
+        
+        return columnToStopAnticipate;
+    }
+
+    private int GetColumnToStartAnticipate(int[] columnsWithSpecialSymbol)
+    {
+        int columnToStartAnticipate = -1;
+        int positionToGetMinAnticipate = Config.MinToAnticipate - 1;
 
         if (positionToGetMinAnticipate < 0)
             positionToGetMinAnticipate = 0;
         
         columnToStartAnticipate = columnsWithSpecialSymbol[positionToGetMinAnticipate] + 1;
-
-        if (positionToGetMaxAnticipate >= 0 && columnsWithSpecialSymbol.Length >= Config.MaxToAnticipate)
-            columnToStopAnticipate = columnsWithSpecialSymbol[positionToGetMaxAnticipate] + 1;
-        
-        if(columnToStartAnticipate > Config.ColumnSize)
-            return GetCadences();
-
-        return GetCadences(columnToStartAnticipate, columnToStopAnticipate);
+        return columnToStartAnticipate;
     }
 
-    private float[] GetCadences(int columnToStartAnticipate = -1, int columnToStopAnticipate = -1)
+    private float[] GetCadences(int columnToStartAnticipate = -1, int columnToStopAnticipate = 999)
     {
         float[] cadences = new float[Config.ColumnSize];
         
