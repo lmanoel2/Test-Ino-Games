@@ -1,10 +1,15 @@
-﻿using Cadence.Models.Machine;
-
-namespace Cadence.Models.Round;
+﻿namespace Cadence.Models.Round;
 
 public class RoundsCadences
 {
-    public SlotCadence RoundOne { get; set; }
-    public SlotCadence RoundTwo { get; set; }
-    public SlotCadence RoundThree { get; set; }
+    public float[] RoundOne { get; set; } = new float[] { };
+    public float[] RoundTwo { get; set; } = new float[] { };
+    public float[] RoundThree { get; set; } = new float[] { };
+
+    public override string ToString()
+    {
+        return $"Round One: [{string.Join(", ", RoundOne.Select(x => x.ToString("0.##").Replace(",", ".")))}]\n" +
+               $"Round Two: [{string.Join(", ", RoundTwo.Select(x => x.ToString("0.##").Replace(",", ".")))}]\n" +
+               $"Round Three: [{string.Join(", ", RoundThree.Select(x => x.ToString("0.##").Replace(",", ".")))}]";
+    }
 }

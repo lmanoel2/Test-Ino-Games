@@ -1,6 +1,5 @@
 ﻿using Cadence.Enumerators.Machine;
 using Cadence.Factories.Machine;
-using Cadence.Interfaces.Machine;
 using Cadence.Models.Config;
 using Cadence.Models.Machine;
 using Cadence.Models.Round;
@@ -13,61 +12,34 @@ AnticipatorConfig anticipatorConfig = new AnticipatorConfig
     MinToAnticipate = 2,
     MaxToAnticipate = 3,
     AnticipateCadence = 2,
-    DefaultCadence = 0.25
+    DefaultCadence = 0.25f
 };
 
-IMachineBase machineCadence = MachineFactory.GetMachine(Machine.SlotMachine, anticipatorConfig);
+SlotMachineCadence machineCadence = (SlotMachineCadence) MachineFactory.GetMachine(Machine.SlotMachine, anticipatorConfig);
 
-RoundsSymbols gameRounds = new RoundsSymbols
+SpecialSymbol roundOne = new SpecialSymbol(new List<SlotCoordinate>
 {
-    RoundOne = new SpecialSymbol()
-    {
-        SlotCoordinates = new List<SlotCoordinate>
-        {
-            new SlotCoordinate { Column = 0, Row = 2 },
-            new SlotCoordinate { Column = 1, Row = 3 },
-            new SlotCoordinate { Column = 3, Row = 4 }
-        }
-    },
-    RoundTwo = new SpecialSymbol
-    {
-        SlotCoordinates = new List<SlotCoordinate>
-        {
-            new SlotCoordinate { Column = 0, Row = 2 },
-            new SlotCoordinate { Column = 0, Row = 3 }
-        }
-    },
-    RoundThree = new SpecialSymbol
-    {
-        SlotCoordinates = new List<SlotCoordinate>
-        {
-            new SlotCoordinate { Column = 4, Row = 2 },
-            new SlotCoordinate { Column = 4, Row = 3 }
-        }
-    }
-};
+    new SlotCoordinate { Column = 0, Row = 2 },
+    new SlotCoordinate { Column = 1, Row = 3 },
+    new SlotCoordinate { Column = 3, Row = 4 }
+});
 
-RoundsCadences slotMachineCadences = new RoundsCadences
+SpecialSymbol roundTwo = new SpecialSymbol(new List<SlotCoordinate>
 {
-    RoundOne = new SlotCadence(),
-    RoundTwo = new SlotCadence(),
-    RoundThree = new SlotCadence()
-};
+    new SlotCoordinate { Column = 0, Row = 2 },
+    new SlotCoordinate { Column = 0, Row = 3 }
+});
 
-
-Console.WriteLine($"CADENCES {HandleCadences(slotMachineCadences, gameRounds)}");
-
-
-static RoundsCadences HandleCadences(RoundsCadences slotMachineCadences, RoundsSymbols rounds)
+SpecialSymbol roundThree = new SpecialSymbol(new List<SlotCoordinate>
 {
-    slotMachineCadences.RoundOne = SlotCadence(rounds.RoundOne.SlotCoordinates);
-    slotMachineCadences.RoundTwo = SlotCadence(rounds.RoundTwo.SlotCoordinates);
-    slotMachineCadences.RoundThree = SlotCadence(rounds.RoundThree.SlotCoordinates);
+    new SlotCoordinate { Column = 4, Row = 2 },
+    new SlotCoordinate { Column = 4, Row = 3 }
+});
 
-    return slotMachineCadences;
-}
+RoundsSymbols gameRounds = new RoundsSymbols(roundOne, roundTwo,roundThree);
 
-static SlotCadence SlotCadence(List<SlotCoordinate> slotCoordinates)
-{
-    return new SlotCadence();
-}
+machineCadence.AddRounds(gameRounds);
+RoundsCadences cadences = machineCadence.HandleCadences();
+machineCadence.CleanRounds();
+
+Console.WriteLine($"CADENCES \n{cadences}");

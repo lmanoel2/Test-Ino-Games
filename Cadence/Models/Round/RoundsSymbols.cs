@@ -2,9 +2,9 @@
 
 namespace Cadence.Models.Round;
 
-public class RoundsSymbols
+public class RoundsSymbols(SymbolBase roundOne, SymbolBase roundTwo, SymbolBase roundThree)
 {
-    public SymbolBase RoundOne { get; set; }
-    public SymbolBase RoundTwo { get; set; }
-    public SymbolBase RoundThree { get; set; }
+    public SymbolBase RoundOne { get; set; } = roundOne;
+    public SymbolBase RoundTwo { get; set; } = roundTwo;
+    public SymbolBase RoundThree { get; set; } = roundThree;
 }

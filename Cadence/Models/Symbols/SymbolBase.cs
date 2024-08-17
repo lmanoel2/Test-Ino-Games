@@ -2,7 +2,9 @@
 
 namespace Cadence.Models.Symbols;
 
-public class SymbolBase
+public abstract class SymbolBase(List<SlotCoordinate> slotCoordinates)
 {
-    public List<SlotCoordinate> SlotCoordinates { get; set; }
+    public List<SlotCoordinate> SlotCoordinates { get; set; } = slotCoordinates;
+
+    public virtual bool IsSpecialSymbol { get; }
 }
