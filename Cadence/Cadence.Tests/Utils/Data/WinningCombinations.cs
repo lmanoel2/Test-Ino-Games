@@ -91,7 +91,7 @@ public static class WinningCombinations
             new List<WinningCombinationsResult>
             {
                 new WinningCombinationsResult(2, new List<int> { 1, 2, 3 }),
-                new WinningCombinationsResult(3, new List<int> { 4, 5 })
+                new WinningCombinationsResult(3, new List<int> { 2, 3, 4, 5 })
             }
         };
         
@@ -101,7 +101,7 @@ public static class WinningCombinations
             new List<WinningCombinationsResult>
             {
                 new WinningCombinationsResult(1, new List<int> { 0, 1, 2, 3 }),
-                new WinningCombinationsResult(3, new List<int> { 4, 5 })
+                new WinningCombinationsResult(3, new List<int> { 2, 3, 4, 5 })
             }
         };
         

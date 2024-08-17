@@ -25,51 +25,73 @@ public class SlotMachineCadenceService(SlotMachineCadence slotMachineCadence) : 
 
     public List<WinningCombinationsResult> CalculateLineWinningCombinations(int[] lineSymbols)
     {
-        // 0, 0, 0, 0, 8
         List<WinningCombinationsResult> winningCombinationsResults = new List<WinningCombinationsResult>();
         
-        for (int i = 0; i < lineSymbols.Length; i++)
+        for (int positionActualSymbol = 0; positionActualSymbol < lineSymbols.Length; positionActualSymbol++)
         {
-            int idSymbol = lineSymbols[i];
-            int idSymbolPrincipal = idSymbol;
-            List<int> indicesCombinnation = new List<int>() {i};
-            ISymbolBase symbol = SymbolFactory.GetSymbol(idSymbol);
+            List<int> indicesCombinnation = new List<int>() {positionActualSymbol};
+            int idSymbolActual = lineSymbols[positionActualSymbol];
+            int idSymbolPrincipal = idSymbolActual;
             
-            if (!symbol.IsPayingSymbol)
+            ISymbolBase symbolActual = SymbolFactory.GetSymbol(idSymbolActual);
+            
+            if (!symbolActual.IsPayingSymbol)
                 continue;
             
-            for (int j = i+1; j < lineSymbols.Length; j++)
-            {
-                if (j > lineSymbols.Length) break;
-                
-                int nextIdSymbol = lineSymbols[j];
-                ISymbolBase nextSymbol = SymbolFactory.GetSymbol(nextIdSymbol);
-
-                if (!nextSymbol.IsPayingSymbol || 
-                    (!symbol.IsSpecialSymbol && idSymbol != nextIdSymbol && !nextSymbol.IsSpecialSymbol) ||
-                    idSymbol != idSymbolPrincipal &&  idSymbolPrincipal != nextIdSymbol) 
-                    break;
-                
-                indicesCombinnation.Add(j);
-                
-                idSymbolPrincipal = symbol.IsSpecialSymbol ? nextIdSymbol : idSymbol;
-
-                if(indicesCombinnation.Count < 3 ||
-                   symbol.IsSpecialSymbol && nextSymbol.IsSpecialSymbol && indicesCombinnation.Count < lineSymbols.Length)
-                    continue;
-                
-                WinningCombinationsResult? winningCombinationsResult  = winningCombinationsResults.Find(w => w.Number == idSymbolPrincipal);
-                
-                if(winningCombinationsResult is null)
-                    winningCombinationsResults.Add(new WinningCombinationsResult(idSymbolPrincipal, indicesCombinnation));
-                else if(winningCombinationsResult.Indices.Count < indicesCombinnation.Count)
-                    winningCombinationsResult.Indices = indicesCombinnation;
-            }
+            TryToLinkWithNextSymbols(lineSymbols, positionActualSymbol, symbolActual, idSymbolActual, idSymbolPrincipal, indicesCombinnation, winningCombinationsResults);
         }
         
         return winningCombinationsResults;
     }
 
+    private static void TryToLinkWithNextSymbols(int[] lineSymbols, int positionActualSymbol, ISymbolBase symbolActual,
+        int idSymbolActual, int idSymbolPrincipal, List<int> indicesCombinnation, List<WinningCombinationsResult> winningCombinationsResults)
+    {
+        for (int positionNextSymbol = positionActualSymbol+1; positionNextSymbol < lineSymbols.Length; positionNextSymbol++)
+        {
+            if (positionNextSymbol > lineSymbols.Length) 
+                break;
+                
+            int nextIdSymbol = lineSymbols[positionNextSymbol];
+            ISymbolBase nextSymbol = SymbolFactory.GetSymbol(nextIdSymbol);
+
+            if (!CheckIsAllowedToLinkNextSymbol(nextSymbol, symbolActual, idSymbolActual, nextIdSymbol, idSymbolPrincipal)) 
+                break;
+                
+            indicesCombinnation.Add(positionNextSymbol);
+                
+            idSymbolPrincipal = symbolActual.IsSpecialSymbol ? nextIdSymbol : idSymbolActual;
+
+            if(!CheckIsAllowedPopulateWinningCombinationsResult(lineSymbols, indicesCombinnation, symbolActual, nextSymbol))
+                continue;
+                
+            PopulateWinningCombinationsResults(winningCombinationsResults, idSymbolPrincipal, indicesCombinnation);
+        }
+    }
+
+    private static bool CheckIsAllowedToLinkNextSymbol(ISymbolBase nextSymbol, ISymbolBase symbolActual, int idSymbolActual, int nextIdSymbol, int idSymbolPrincipal)
+    {
+        return nextSymbol.IsPayingSymbol && 
+               (symbolActual.IsSpecialSymbol || idSymbolActual == nextIdSymbol || nextSymbol.IsSpecialSymbol) &&
+               (idSymbolActual == idSymbolPrincipal || idSymbolPrincipal == nextIdSymbol);
+    }
+
+    private static bool CheckIsAllowedPopulateWinningCombinationsResult(int[] lineSymbols, List<int> indicesCombinnation, ISymbolBase symbolActual, ISymbolBase nextSymbol)
+    {
+        return indicesCombinnation.Count >= 3 &&
+               (!symbolActual.IsSpecialSymbol || !nextSymbol.IsSpecialSymbol || indicesCombinnation.Count >= lineSymbols.Length);
+    }
+    
+    private static void PopulateWinningCombinationsResults(List<WinningCombinationsResult> winningCombinationsResults, int idSymbolPrincipal, List<int> indicesCombinnation)
+    {
+        WinningCombinationsResult? winningCombinationsResult  = winningCombinationsResults.Find(w => w.Number == idSymbolPrincipal);
+
+        if(winningCombinationsResult is null)
+            winningCombinationsResults.Add(new WinningCombinationsResult(idSymbolPrincipal, indicesCombinnation));
+        else if(winningCombinationsResult.Indices.Count < indicesCombinnation.Count)
+            winningCombinationsResult.Indices = indicesCombinnation;
+    }
+    
     private float[] PopulateCandence(ISymbolBase symbol)
     {
         int[] columnsWithSpecialSymbol = symbol.SlotCoordinates
