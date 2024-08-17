@@ -1,8 +1,9 @@
-﻿using Cadence.Interfaces.Machine;
+﻿using Cadence.Factories.Symbol;
+using Cadence.Interfaces.Machine;
+using Cadence.Interfaces.Symbol;
 using Cadence.Models.Machine;
 using Cadence.Models.Results;
 using Cadence.Models.Round;
-using Cadence.Models.Symbols;
 
 namespace Cadence.Services.Machine;
 
@@ -24,15 +25,52 @@ public class SlotMachineCadenceService(SlotMachineCadence slotMachineCadence) : 
 
     public List<WinningCombinationsResult> CalculateLineWinningCombinations(int[] lineSymbols)
     {
-        foreach (var lineSymbol in lineSymbols)
+        // 0, 0, 0, 0, 8
+        List<WinningCombinationsResult> winningCombinationsResults = new List<WinningCombinationsResult>();
+        
+        for (int i = 0; i < lineSymbols.Length; i++)
         {
+            int idSymbol = lineSymbols[i];
+            int idSymbolPrincipal = idSymbol;
+            List<int> indicesCombinnation = new List<int>() {i};
+            ISymbolBase symbol = SymbolFactory.GetSymbol(idSymbol);
             
+            if (!symbol.IsPayingSymbol)
+                continue;
+            
+            for (int j = i+1; j < lineSymbols.Length; j++)
+            {
+                if (j > lineSymbols.Length) break;
+                
+                int nextIdSymbol = lineSymbols[j];
+                ISymbolBase nextSymbol = SymbolFactory.GetSymbol(nextIdSymbol);
+
+                if (!nextSymbol.IsPayingSymbol || 
+                    (!symbol.IsSpecialSymbol && idSymbol != nextIdSymbol && !nextSymbol.IsSpecialSymbol) ||
+                    idSymbol != idSymbolPrincipal &&  idSymbolPrincipal != nextIdSymbol) 
+                    break;
+                
+                indicesCombinnation.Add(j);
+                
+                idSymbolPrincipal = symbol.IsSpecialSymbol ? nextIdSymbol : idSymbol;
+
+                if(indicesCombinnation.Count < 3 ||
+                   symbol.IsSpecialSymbol && nextSymbol.IsSpecialSymbol && indicesCombinnation.Count < lineSymbols.Length)
+                    continue;
+                
+                WinningCombinationsResult? winningCombinationsResult  = winningCombinationsResults.Find(w => w.Number == idSymbolPrincipal);
+                
+                if(winningCombinationsResult is null)
+                    winningCombinationsResults.Add(new WinningCombinationsResult(idSymbolPrincipal, indicesCombinnation));
+                else if(winningCombinationsResult.Indices.Count < indicesCombinnation.Count)
+                    winningCombinationsResult.Indices = indicesCombinnation;
+            }
         }
         
-        return new List<WinningCombinationsResult>();
+        return winningCombinationsResults;
     }
 
-    private float[] PopulateCandence(SymbolBase symbol)
+    private float[] PopulateCandence(ISymbolBase symbol)
     {
         int[] columnsWithSpecialSymbol = symbol.SlotCoordinates
             .Select(sc => sc.Column)
