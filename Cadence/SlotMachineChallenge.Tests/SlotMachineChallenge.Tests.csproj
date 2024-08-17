@@ -4,10 +4,11 @@
         <TargetFramework>net8.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <RootNamespace>Cadence.Tests</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Cadence\Cadence.csproj" />
+      <ProjectReference Include="..\SlotMachineChallenge\SlotMachineChallenge.csproj" />
     </ItemGroup>
 
     <ItemGroup>

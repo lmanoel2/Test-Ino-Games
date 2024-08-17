@@ -1,8 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cadence", "Cadence\Cadence.csproj", "{74B11700-1D7E-4F4E-B2C4-237674488E6C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SlotMachineChallenge", "SlotMachineChallenge\SlotMachineChallenge.csproj", "{74B11700-1D7E-4F4E-B2C4-237674488E6C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cadence.Tests", "Cadence.Tests\Cadence.Tests.csproj", "{9192F3A6-1CAF-4575-956D-3D5145675340}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SlotMachineChallenge.Tests", "SlotMachineChallenge.Tests\SlotMachineChallenge.Tests.csproj", "{9192F3A6-1CAF-4575-956D-3D5145675340}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
