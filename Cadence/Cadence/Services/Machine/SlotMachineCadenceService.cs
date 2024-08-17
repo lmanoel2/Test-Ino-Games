@@ -1,5 +1,6 @@
 ﻿using Cadence.Interfaces.Machine;
 using Cadence.Models.Machine;
+using Cadence.Models.Results;
 using Cadence.Models.Round;
 using Cadence.Models.Symbols;
 
@@ -19,6 +20,16 @@ public class SlotMachineCadenceService(SlotMachineCadence slotMachineCadence) : 
         roundsCadences.RoundThree = PopulateCandence(slotMachineCadence.RoundsSymbols.RoundThree);
 
         return roundsCadences;
+    }
+
+    public List<WinningCombinationsResult> CalculateLineWinningCombinations(int[] lineSymbols)
+    {
+        foreach (var lineSymbol in lineSymbols)
+        {
+            
+        }
+        
+        return new List<WinningCombinationsResult>();
     }
 
     private float[] PopulateCandence(SymbolBase symbol)

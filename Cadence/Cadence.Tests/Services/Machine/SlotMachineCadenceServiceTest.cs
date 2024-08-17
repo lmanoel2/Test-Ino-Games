@@ -2,9 +2,11 @@
 using Cadence.Interfaces.Machine;
 using Cadence.Models.Config;
 using Cadence.Models.Machine;
+using Cadence.Models.Results;
 using Cadence.Models.Round;
 using Cadence.Models.Slot;
 using Cadence.Models.Symbols;
+using Cadence.Tests.Utils.Data;
 using FluentAssertions;
 using Xunit;
 
@@ -137,5 +139,31 @@ public class SlotMachineCadenceServiceTest
         cadences.RoundOne.Length.Should().Be(columnSize);
         cadences.RoundTwo.Length.Should().Be(columnSize);
         cadences.RoundThree.Length.Should().Be(columnSize);
+    }
+    
+    
+    
+    
+    [Theory]
+    [MemberData(nameof(WinningCombinations.GetWinningCombinationTestData), MemberType = typeof(WinningCombinations))]
+    public void Calculate_Winning_Combinations(int[] input, List<WinningCombinationsResult> outputExpected )
+    {
+        //Arrange
+        AnticipatorConfig anticipatorConfig = new AnticipatorConfig { ColumnSize = 4, MinToAnticipate = 2, MaxToAnticipate = 3, AnticipateCadence = 3, DefaultCadence = 1 };
+        SimpleSymbol roundOne = new SimpleSymbol(new List<SlotCoordinate> { });
+        SimpleSymbol roundTwo = new SimpleSymbol(new List<SlotCoordinate> { });
+        SimpleSymbol roundThree = new SimpleSymbol(new List<SlotCoordinate> { });
+        RoundsSymbols gameRounds = new RoundsSymbols(roundOne, roundTwo, roundThree);
+        
+        SlotMachineCadence machineCadence = new SlotMachineCadence(anticipatorConfig);
+        machineCadence.AddRounds(gameRounds);
+        
+        ISlotMachineCadenceService machineService = MachineFactory.GetMachineService(machineCadence);
+        
+        //Act
+        List<WinningCombinationsResult> winningCombinations = machineService.CalculateLineWinningCombinations(input);
+        
+        //Assert
+        winningCombinations.Should().BeEquivalentTo(outputExpected, options => options.WithoutStrictOrdering());
     }
 }

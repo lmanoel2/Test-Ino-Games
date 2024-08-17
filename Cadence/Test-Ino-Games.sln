@@ -4,10 +4,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cadence", "Cadence\Cadence.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cadence.Tests", "Cadence.Tests\Cadence.Tests.csproj", "{9192F3A6-1CAF-4575-956D-3D5145675340}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinningCombinations.Tests", "WinningCombinations.Tests\WinningCombinations.Tests.csproj", "{AC9216E9-6C22-4AE9-A42E-9689EBF9844E}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinningCombinations", "WinningCombinations\WinningCombinations.csproj", "{7DB3F38E-9E92-4E94-ABC2-37E36AC529E2}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -22,13 +18,5 @@ Global
 		{9192F3A6-1CAF-4575-956D-3D5145675340}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9192F3A6-1CAF-4575-956D-3D5145675340}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9192F3A6-1CAF-4575-956D-3D5145675340}.Release|Any CPU.Build.0 = Release|Any CPU
-		{AC9216E9-6C22-4AE9-A42E-9689EBF9844E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AC9216E9-6C22-4AE9-A42E-9689EBF9844E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AC9216E9-6C22-4AE9-A42E-9689EBF9844E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AC9216E9-6C22-4AE9-A42E-9689EBF9844E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7DB3F38E-9E92-4E94-ABC2-37E36AC529E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7DB3F38E-9E92-4E94-ABC2-37E36AC529E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7DB3F38E-9E92-4E94-ABC2-37E36AC529E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7DB3F38E-9E92-4E94-ABC2-37E36AC529E2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
