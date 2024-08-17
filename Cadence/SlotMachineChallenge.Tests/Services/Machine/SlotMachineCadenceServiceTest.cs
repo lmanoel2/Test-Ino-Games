@@ -1,13 +1,13 @@
-﻿using Cadence.Factories.Machine;
-using Cadence.Interfaces.Machine;
-using Cadence.Models.Config;
-using Cadence.Models.Machine;
-using Cadence.Models.Results;
-using Cadence.Models.Round;
-using Cadence.Models.Slot;
-using Cadence.Models.Symbols;
-using Cadence.Tests.Utils.Data;
+﻿using Cadence.Tests.Utils.Data;
 using FluentAssertions;
+using SlotMachineChallenge.Factories.Machine;
+using SlotMachineChallenge.Interfaces.Machine;
+using SlotMachineChallenge.Models.Config;
+using SlotMachineChallenge.Models.Machine;
+using SlotMachineChallenge.Models.Results;
+using SlotMachineChallenge.Models.Round;
+using SlotMachineChallenge.Models.Slot;
+using SlotMachineChallenge.Models.Symbols;
 using Xunit;
 
 namespace Cadence.Tests.Services.Machine;

@@ -1,7 +1,7 @@
-﻿using Cadence.Interfaces.Symbol;
-using Cadence.Models.Slot;
+﻿using SlotMachineChallenge.Interfaces.Symbol;
+using SlotMachineChallenge.Models.Slot;
 
-namespace Cadence.Models.Symbols;
+namespace SlotMachineChallenge.Models.Symbols;
 
 public abstract class SymbolBase(List<SlotCoordinate> slotCoordinates) : ISymbolBase
 {

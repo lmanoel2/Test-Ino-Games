@@ -1,6 +1,6 @@
-﻿using Cadence.Models.Slot;
+﻿using SlotMachineChallenge.Models.Slot;
 
-namespace Cadence.Interfaces.Symbol;
+namespace SlotMachineChallenge.Interfaces.Symbol;
 
 public interface ISymbolBase
 {

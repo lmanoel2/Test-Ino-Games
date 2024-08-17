@@ -1,4 +1,4 @@
-﻿namespace Cadence.Interfaces.Config;
+﻿namespace SlotMachineChallenge.Interfaces.Config;
 
 public interface IConfigBase
 {

@@ -1,7 +1,7 @@
-﻿using Cadence.Models.Results;
-using Cadence.Models.Round;
+﻿using SlotMachineChallenge.Models.Results;
+using SlotMachineChallenge.Models.Round;
 
-namespace Cadence.Interfaces.Machine;
+namespace SlotMachineChallenge.Interfaces.Machine;
 
 public interface ISlotMachineCadenceService
 {

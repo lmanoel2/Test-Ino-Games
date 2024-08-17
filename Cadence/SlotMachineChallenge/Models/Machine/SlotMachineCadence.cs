@@ -1,7 +1,7 @@
-﻿using Cadence.Models.Config;
-using Cadence.Models.Round;
+﻿using SlotMachineChallenge.Models.Config;
+using SlotMachineChallenge.Models.Round;
 
-namespace Cadence.Models.Machine;
+namespace SlotMachineChallenge.Models.Machine;
 
 public class SlotMachineCadence(AnticipatorConfig config) : MachineBase(Enumerators.Machine.Machine.SlotMachine)
 {

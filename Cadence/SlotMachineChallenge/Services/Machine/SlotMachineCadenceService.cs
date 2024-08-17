@@ -1,11 +1,11 @@
-﻿using Cadence.Factories.Symbol;
-using Cadence.Interfaces.Machine;
-using Cadence.Interfaces.Symbol;
-using Cadence.Models.Machine;
-using Cadence.Models.Results;
-using Cadence.Models.Round;
+﻿using SlotMachineChallenge.Factories.Symbol;
+using SlotMachineChallenge.Interfaces.Machine;
+using SlotMachineChallenge.Interfaces.Symbol;
+using SlotMachineChallenge.Models.Machine;
+using SlotMachineChallenge.Models.Results;
+using SlotMachineChallenge.Models.Round;
 
-namespace Cadence.Services.Machine;
+namespace SlotMachineChallenge.Services.Machine;
 
 public class SlotMachineCadenceService(SlotMachineCadence slotMachineCadence) : ISlotMachineCadenceService
 {

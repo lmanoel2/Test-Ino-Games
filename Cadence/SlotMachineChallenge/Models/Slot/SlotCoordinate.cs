@@ -1,4 +1,4 @@
-﻿namespace Cadence.Models.Slot;
+﻿namespace SlotMachineChallenge.Models.Slot;
 
 public class SlotCoordinate
 {

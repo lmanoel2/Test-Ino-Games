@@ -1,10 +1,10 @@
-﻿using Cadence.Factories.Machine;
-using Cadence.Interfaces.Machine;
-using Cadence.Models.Config;
-using Cadence.Models.Machine;
-using Cadence.Models.Round;
-using Cadence.Models.Slot;
-using Cadence.Models.Symbols;
+﻿using SlotMachineChallenge.Factories.Machine;
+using SlotMachineChallenge.Interfaces.Machine;
+using SlotMachineChallenge.Models.Config;
+using SlotMachineChallenge.Models.Machine;
+using SlotMachineChallenge.Models.Round;
+using SlotMachineChallenge.Models.Slot;
+using SlotMachineChallenge.Models.Symbols;
 
 AnticipatorConfig anticipatorConfig = new AnticipatorConfig
 {

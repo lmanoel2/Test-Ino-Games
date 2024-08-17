@@ -1,8 +1,8 @@
-﻿using Cadence.Interfaces.Machine;
-using Cadence.Models.Machine;
-using Cadence.Services.Machine;
+﻿using SlotMachineChallenge.Interfaces.Machine;
+using SlotMachineChallenge.Models.Machine;
+using SlotMachineChallenge.Services.Machine;
 
-namespace Cadence.Factories.Machine;
+namespace SlotMachineChallenge.Factories.Machine;
 
 public static class MachineFactory
 {

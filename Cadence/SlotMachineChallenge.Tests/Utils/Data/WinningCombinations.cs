@@ -1,4 +1,4 @@
-﻿using Cadence.Models.Results;
+﻿using SlotMachineChallenge.Models.Results;
 
 namespace Cadence.Tests.Utils.Data;
 

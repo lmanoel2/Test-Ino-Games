@@ -1,6 +1,6 @@
-﻿using Cadence.Models.Slot;
+﻿using SlotMachineChallenge.Models.Slot;
 
-namespace Cadence.Models.Symbols;
+namespace SlotMachineChallenge.Models.Symbols;
 
 public class SimpleSymbol(List<SlotCoordinate> slotCoordinates) : SymbolBase(slotCoordinates)
 {

@@ -1,4 +1,4 @@
-﻿namespace Cadence.Models.Round;
+﻿namespace SlotMachineChallenge.Models.Round;
 
 public class RoundsCadences
 {

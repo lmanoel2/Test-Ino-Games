@@ -1,6 +1,6 @@
-﻿using Cadence.Models.Symbols;
+﻿using SlotMachineChallenge.Models.Symbols;
 
-namespace Cadence.Models.Round;
+namespace SlotMachineChallenge.Models.Round;
 
 public class RoundsSymbols(SymbolBase roundOne, SymbolBase roundTwo, SymbolBase roundThree)
 {

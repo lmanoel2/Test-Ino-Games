@@ -1,7 +1,7 @@
-﻿using Cadence.Models.Slot;
-using Cadence.Models.Symbols;
+﻿using SlotMachineChallenge.Models.Slot;
+using SlotMachineChallenge.Models.Symbols;
 
-namespace Cadence.Factories.Symbol;
+namespace SlotMachineChallenge.Factories.Symbol;
 
 public static class SymbolFactory
 {

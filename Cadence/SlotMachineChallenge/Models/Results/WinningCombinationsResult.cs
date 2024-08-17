@@ -1,4 +1,4 @@
-﻿namespace Cadence.Models.Results;
+﻿namespace SlotMachineChallenge.Models.Results;
 
 public class WinningCombinationsResult
 {

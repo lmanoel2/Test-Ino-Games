@@ -1,6 +1,6 @@
-﻿using Cadence.Interfaces.Config;
+﻿using SlotMachineChallenge.Interfaces.Config;
 
-namespace Cadence.Models.Config;
+namespace SlotMachineChallenge.Models.Config;
 
 public class AnticipatorConfig : IConfigBase
 {

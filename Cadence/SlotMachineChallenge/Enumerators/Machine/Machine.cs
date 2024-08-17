@@ -1,4 +1,4 @@
-﻿namespace Cadence.Enumerators.Machine;
+﻿namespace SlotMachineChallenge.Enumerators.Machine;
 
 public enum Machine
 {
