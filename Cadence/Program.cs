@@ -1,5 +1,6 @@
 ﻿using Cadence.Enumerators.Machine;
 using Cadence.Factories.Machine;
+using Cadence.Interfaces.Machine;
 using Cadence.Models.Config;
 using Cadence.Models.Machine;
 using Cadence.Models.Round;
@@ -15,7 +16,7 @@ AnticipatorConfig anticipatorConfig = new AnticipatorConfig
     DefaultCadence = 0.25f
 };
 
-SlotMachineCadence machineCadence = (SlotMachineCadence) MachineFactory.GetMachine(Machine.SlotMachine, anticipatorConfig);
+ISlotMachineCadence machineCadence = (ISlotMachineCadence) MachineFactory.GetMachine(Machine.SlotMachine, anticipatorConfig);
 
 SpecialSymbol roundOne = new SpecialSymbol(new List<SlotCoordinate>
 {

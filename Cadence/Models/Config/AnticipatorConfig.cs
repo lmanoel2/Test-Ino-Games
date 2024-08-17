@@ -1,6 +1,8 @@
-﻿namespace Cadence.Models.Config;
+﻿using Cadence.Interfaces.Config;
 
-public class AnticipatorConfig : ConfigBase
+namespace Cadence.Models.Config;
+
+public class AnticipatorConfig : IConfigBase
 {
     public int ColumnSize { get; set; }
     public int MinToAnticipate { get; set; }

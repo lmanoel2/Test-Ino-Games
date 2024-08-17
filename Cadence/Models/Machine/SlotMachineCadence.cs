@@ -5,11 +5,11 @@ using Cadence.Models.Symbols;
 
 namespace Cadence.Models.Machine;
 
-public class SlotMachineCadence(AnticipatorConfig config) : MachineBase, ISlotMachineCadence
+public class SlotMachineCadence(AnticipatorConfig config) : ISlotMachineCadence, IMachineBase
 {
-    public AnticipatorConfig Config { get; init; } = config;
+    private AnticipatorConfig Config { get; init; } = config;
 
-    public RoundsSymbols? RoundsSymbols { get; private set; } 
+    private RoundsSymbols? RoundsSymbols { get; set; } 
     
     public void AddRounds(RoundsSymbols roundsSymbols)
     {
@@ -24,7 +24,7 @@ public class SlotMachineCadence(AnticipatorConfig config) : MachineBase, ISlotMa
     public RoundsCadences HandleCadences()
     {
         if (RoundsSymbols is null)
-            throw new ArgumentNullException("RoundsSymbols is null");
+            throw new ArgumentNullException("Not found rounds to handle cadences");
         
         RoundsCadences roundsCadences = new RoundsCadences();
 
