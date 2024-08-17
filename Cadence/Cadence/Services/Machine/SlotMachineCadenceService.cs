@@ -1,36 +1,22 @@
 ﻿using Cadence.Interfaces.Machine;
-using Cadence.Models.Config;
+using Cadence.Models.Machine;
 using Cadence.Models.Round;
 using Cadence.Models.Symbols;
 
-namespace Cadence.Models.Machine;
+namespace Cadence.Services.Machine;
 
-public class SlotMachineCadence(AnticipatorConfig config) : ISlotMachineCadence, IMachineBase
+public class SlotMachineCadenceService(SlotMachineCadence slotMachineCadence) : ISlotMachineCadenceService
 {
-    private AnticipatorConfig Config { get; init; } = config;
-
-    private RoundsSymbols? RoundsSymbols { get; set; } 
-    
-    public void AddRounds(RoundsSymbols roundsSymbols)
-    {
-        RoundsSymbols = roundsSymbols;
-    }
-
-    public void CleanRounds()
-    {
-        RoundsSymbols = null;
-    }
-
     public RoundsCadences HandleCadences()
     {
-        if (RoundsSymbols is null)
+        if (slotMachineCadence.RoundsSymbols is null)
             throw new ArgumentNullException("Not found rounds to handle cadences");
         
         RoundsCadences roundsCadences = new RoundsCadences();
 
-        roundsCadences.RoundOne = PopulateCandence(RoundsSymbols.RoundOne);
-        roundsCadences.RoundTwo = PopulateCandence(RoundsSymbols.RoundTwo);
-        roundsCadences.RoundThree = PopulateCandence(RoundsSymbols.RoundThree);
+        roundsCadences.RoundOne = PopulateCandence(slotMachineCadence.RoundsSymbols.RoundOne);
+        roundsCadences.RoundTwo = PopulateCandence(slotMachineCadence.RoundsSymbols.RoundTwo);
+        roundsCadences.RoundThree = PopulateCandence(slotMachineCadence.RoundsSymbols.RoundThree);
 
         return roundsCadences;
     }
@@ -44,13 +30,13 @@ public class SlotMachineCadence(AnticipatorConfig config) : ISlotMachineCadence,
         
         if (!symbol.IsSpecialSymbol ||
             columnsWithSpecialSymbol.Length == 0 ||
-            columnsWithSpecialSymbol.Length < Config.MinToAnticipate)
+            columnsWithSpecialSymbol.Length < slotMachineCadence.Config.MinToAnticipate)
             return GetCadences();
 
         int columnToStartAnticipate = GetColumnToStartAnticipate(columnsWithSpecialSymbol);
         int columnToStopAnticipate = GetColumnToStopAnticipate(columnsWithSpecialSymbol);
 
-        return columnToStartAnticipate > Config.ColumnSize ? 
+        return columnToStartAnticipate > slotMachineCadence.Config.ColumnSize ? 
             GetCadences() : 
             GetCadences(columnToStartAnticipate, columnToStopAnticipate);
     }
@@ -59,9 +45,9 @@ public class SlotMachineCadence(AnticipatorConfig config) : ISlotMachineCadence,
     {
         int columnToStopAnticipate = 999;
 
-        int positionToGetMaxAnticipate = Config.MaxToAnticipate - 1;
+        int positionToGetMaxAnticipate = slotMachineCadence.Config.MaxToAnticipate - 1;
         
-        if (positionToGetMaxAnticipate >= 0 && columnsWithSpecialSymbol.Length >= Config.MaxToAnticipate)
+        if (positionToGetMaxAnticipate >= 0 && columnsWithSpecialSymbol.Length >= slotMachineCadence.Config.MaxToAnticipate)
             columnToStopAnticipate = columnsWithSpecialSymbol[positionToGetMaxAnticipate] + 1;
         
         return columnToStopAnticipate;
@@ -70,7 +56,7 @@ public class SlotMachineCadence(AnticipatorConfig config) : ISlotMachineCadence,
     private int GetColumnToStartAnticipate(int[] columnsWithSpecialSymbol)
     {
         int columnToStartAnticipate = -1;
-        int positionToGetMinAnticipate = Config.MinToAnticipate - 1;
+        int positionToGetMinAnticipate = slotMachineCadence.Config.MinToAnticipate - 1;
 
         if (positionToGetMinAnticipate < 0)
             positionToGetMinAnticipate = 0;
@@ -81,16 +67,16 @@ public class SlotMachineCadence(AnticipatorConfig config) : ISlotMachineCadence,
 
     private float[] GetCadences(int columnToStartAnticipate = -1, int columnToStopAnticipate = 999)
     {
-        float[] cadences = new float[Config.ColumnSize];
+        float[] cadences = new float[slotMachineCadence.Config.ColumnSize];
         
-        cadences[0] = Config.DefaultCadence;
+        cadences[0] = slotMachineCadence.Config.DefaultCadence;
 
-        for (int i = 1; i < Config.ColumnSize; i++)
+        for (int i = 1; i < slotMachineCadence.Config.ColumnSize; i++)
         {
             if(i >= columnToStartAnticipate && i  < columnToStopAnticipate)
-                cadences[i] = Config.AnticipateCadence + cadences[i - 1];
+                cadences[i] = slotMachineCadence.Config.AnticipateCadence + cadences[i - 1];
             else
-                cadences[i] = Config.DefaultCadence + cadences[i - 1];
+                cadences[i] = slotMachineCadence.Config.DefaultCadence + cadences[i - 1];
         }
         
         return cadences;

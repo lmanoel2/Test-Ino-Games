@@ -1,5 +1,4 @@
-﻿using Cadence.Enumerators.Machine;
-using Cadence.Factories.Machine;
+﻿using Cadence.Factories.Machine;
 using Cadence.Interfaces.Machine;
 using Cadence.Models.Config;
 using Cadence.Models.Machine;
@@ -16,7 +15,6 @@ AnticipatorConfig anticipatorConfig = new AnticipatorConfig
     DefaultCadence = 0.25f
 };
 
-ISlotMachineCadence machineCadence = (ISlotMachineCadence) MachineFactory.GetMachine(Machine.SlotMachine, anticipatorConfig);
 
 SpecialSymbol roundOne = new SpecialSymbol(new List<SlotCoordinate>
 {
@@ -39,8 +37,12 @@ SpecialSymbol roundThree = new SpecialSymbol(new List<SlotCoordinate>
 
 RoundsSymbols gameRounds = new RoundsSymbols(roundOne, roundTwo,roundThree);
 
+SlotMachineCadence machineCadence = new SlotMachineCadence(anticipatorConfig);
 machineCadence.AddRounds(gameRounds);
-RoundsCadences cadences = machineCadence.HandleCadences();
+
+ISlotMachineCadenceService machineService = (ISlotMachineCadenceService) MachineFactory.GetMachineService(machineCadence);
+
+RoundsCadences cadences = machineService.HandleCadences();
 machineCadence.CleanRounds();
 
 Console.WriteLine($"CADENCES \n{cadences}");
